@@ -10,7 +10,7 @@
   </el-form-item>
   <el-form-item >
     <el-input v-model="loginForm.code" placeholder="请输入验证码" style="width:235px;margin-right:10px"></el-input>
-     <el-button>输入验证码</el-button>
+     <el-button>发送验证码</el-button>
   </el-form-item>
    <el-checkbox :value="checked">我已阅读并同意用户协议和隐私条款</el-checkbox>
    <el-form-item>
