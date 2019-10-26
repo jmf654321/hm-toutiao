@@ -61,7 +61,7 @@ export default {
       this.$refs['loginForm'].validate((valid) => {
         if (valid) {
           this.$http.post('/authorizations', this.loginForm).then((res) => {
-            this.$router.push('/home')
+            this.$router.push('/')
           }).catch(() => {
             this.$message.error('用户名或密码错误')
           })

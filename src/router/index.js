@@ -16,10 +16,10 @@ const router = new VueRouter({
       path: '/',
       component: Home,
       children: [
-        { path: '/', component: Welcome },
-        { path: '*', component: Nofind }
+        { path: '/', component: Welcome }
       ]
-    }
+    },
+    { path: '*', component: Nofind }
   ]
 
 })
