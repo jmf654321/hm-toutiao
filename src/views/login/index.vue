@@ -27,6 +27,7 @@
 
 <script>
 import local from '@/untils/local'
+
 export default {
   data () {
     var checkMobile = (rule, value, callback) => {
@@ -59,14 +60,21 @@ export default {
   },
   methods: {
     login () {
-      this.$refs['loginForm'].validate((valid) => {
+      this.$refs['loginForm'].validate(async valid => {
         if (valid) {
-          this.$http.post('/authorizations', this.loginForm).then((res) => {
-            local.setUser(res.data.data)
+          // this.$http.post('/authorizations', this.loginForm).then((res) => {
+          //   local.setUser(res.data.data)
+          //   this.$router.push('/')
+          // }).catch(() => {
+          //   this.$message.error('用户名或密码错误')
+          // })
+          try {
+            const { data: { data } } = await this.$http.post('/authorizations', this.loginForm)
+            local.setUser(data)
             this.$router.push('/')
-          }).catch(() => {
+          } catch (e) {
             this.$message.error('用户名或密码错误')
-          })
+          }
         }
       })
     }
