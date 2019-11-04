@@ -6,6 +6,7 @@ import Welcome from '@/views/welcome'
 import Nofind from '@/views/404'
 import local from '@/untils/local'
 import Article from '@/views/article'
+import Comment from '@/views/comment'
 
 Vue.use(VueRouter)
 
@@ -20,7 +21,8 @@ const router = new VueRouter({
       component: Home,
       children: [
         { path: '/', component: Welcome },
-        { path: '/article', component: Article }
+        { path: '/article', component: Article },
+        { path: '/comment', component: Comment }
       ]
     },
     { path: '*', component: Nofind }
