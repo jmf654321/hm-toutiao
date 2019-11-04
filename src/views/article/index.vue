@@ -16,14 +16,9 @@
         </el-radio-group>
         </el-form-item>
       <el-form-item label="频道 ：">
-        <el-select v-model="reqParams.channel_id" clearable>
-          <el-option
-          v-for="item in channelOptions"
-          :key="item.id"
-          :label="item.name"
-          :value="item.id"
-          ></el-option>
-        </el-select>
+        <!-- 频道 -->
+        <!-- v-model相当于绑定了value属性 和input事件 -->
+         <my-channel v-model="reqParams.channel_id"></my-channel>
       </el-form-item>
       <el-form-item label="日期 ：">
         <el-date-picker
@@ -119,8 +114,8 @@ export default {
       },
       // 数组内容
       datearr: [],
-      // 下拉列表内容
-      channelOptions: [{ value: 1, label: 'java' }, { value: 2, label: '前端' }],
+      // // 下拉列表内容
+      // channelOptions: [{ value: 1, label: 'java' }, { value: 2, label: '前端' }],
       // 文章筛选数据
       articles: [],
       // 文章总页数
@@ -128,15 +123,15 @@ export default {
     }
   },
   created () {
-    this.getChannelOptions()
+    // this.getChannelOptions()
     this.getArticles()
   },
   methods: {
-    // 获取频道选项
-    async getChannelOptions () {
-      const { data: { data } } = await this.$http.get('channels')
-      this.channelOptions = data.channels
-    },
+    // // 获取频道选项
+    // async getChannelOptions () {
+    //   const { data: { data } } = await this.$http.get('channels')
+    //   this.channelOptions = data.channels
+    // },
     // 获取文章列表
     async getArticles () {
       const { data: { data } } = await this.$http.get('articles', { params: this.reqParams })
@@ -161,9 +156,9 @@ export default {
     // 获取数据 v-model不需要获取 需要获取date数据
     search () {
       // 判断频道清除时进行设置
-      if (this.reqParams.channel_id === '') {
-        this.reqParams.channel_id = null
-      }
+      // if (this.reqParams.channel_id === '') {
+      //   this.reqParams.channel_id = null
+      // }
       // 筛选时回到第一页
       this.reqParams.page = 1
       this.getArticles()
