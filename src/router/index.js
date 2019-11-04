@@ -7,6 +7,7 @@ import Nofind from '@/views/404'
 import local from '@/untils/local'
 import Article from '@/views/article'
 import Comment from '@/views/comment'
+import Setting from '@/views/setting'
 
 Vue.use(VueRouter)
 
@@ -22,7 +23,8 @@ const router = new VueRouter({
       children: [
         { path: '/', component: Welcome },
         { path: '/article', component: Article },
-        { path: '/comment', component: Comment }
+        { path: '/comment', component: Comment },
+        { path: '/setting', component: Setting }
       ]
     },
     { path: '*', component: Nofind }
