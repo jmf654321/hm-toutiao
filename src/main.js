@@ -5,6 +5,8 @@ import 'element-ui/lib/theme-chalk/index.css'
 import router from '@/router'
 import axios from '@/api'
 import plugin from '@/components'
+// 引入上传的样式
+import '@/style/index.less'
 Vue.use(plugin)
 Vue.prototype.$http = axios
 Vue.use(ElementUi)

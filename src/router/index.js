@@ -8,6 +8,7 @@ import local from '@/untils/local'
 import Article from '@/views/article'
 import Comment from '@/views/comment'
 import Setting from '@/views/setting'
+import Image from '@/views/image'
 
 Vue.use(VueRouter)
 
@@ -24,7 +25,8 @@ const router = new VueRouter({
         { path: '/', component: Welcome },
         { path: '/article', component: Article },
         { path: '/comment', component: Comment },
-        { path: '/setting', component: Setting }
+        { path: '/setting', component: Setting },
+        { path: '/image', component: Image }
       ]
     },
     { path: '*', component: Nofind }
