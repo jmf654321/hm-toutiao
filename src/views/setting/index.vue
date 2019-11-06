@@ -8,8 +8,8 @@
               <!-- 左侧表单 -->
               <el-col :span="12">
                   <el-form label-width="120px">
-                     <el-form-item label="编号：">1</el-form-item>
-                     <el-form-item label="手机号：">13313313313</el-form-item>
+                     <el-form-item label="编号：">{{userInfo.id}}</el-form-item>
+                     <el-form-item label="手机号：">{{userInfo.mobile}}</el-form-item>
                      <el-form-item label="媒体名称：">
                          <el-input v-model="userInfo.name"></el-input>
                      </el-form-item>
@@ -20,20 +20,21 @@
                          <el-input v-model="userInfo.email"></el-input>
                      </el-form-item>
                      <el-form-item>
-                         <el-button type="primary">保存设置</el-button>
+                         <el-button type="primary" @click="saveInfo">保存设置</el-button>
                      </el-form-item>
                   </el-form>
               </el-col>
               <!-- 上传图片 -->
-              <el-col :span="12">
-                  <!-- <el-upload
+              <el-col :span="12" style="text-align:center">
+                  <el-upload
+                  :http-request="updatePhoto"
                     class="avatar-uploader"
-                    action="http://ttapi.research.itcast.cn/mp/v1_0/user/images"
+                    action=""
                     :show-file-list="false">
-                    <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                    <img v-if="userInfo.photo" :src="userInfo.photo" class="avatar">
                     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                   </el-upload>
-                  <p>修改头像</p> -->
+                  <p>修改头像</p>
               </el-col>
           </el-row>
       </el-card>
@@ -41,15 +42,56 @@
 </template>
 
 <script>
+import local from '@/untils/local'
+import eventBus from '@/eventBus'
 export default {
   data () {
     return {
       userInfo: {
         name: '',
         intro: '',
-        email: ''
-      },
-      imageUrl: null
+        email: '',
+        photo: ''
+      }
+    }
+  },
+  created () {
+    this.getuserInfo()
+  },
+  methods: {
+    // 获取用户资料
+    async getuserInfo () {
+      const { data: { data } } = await this.$http.get('user/profile')
+      this.userInfo = data
+    },
+    // 修改用户资料
+    async saveInfo () {
+      const { name, intro, email } = this.userInfo
+      await this.$http.patch('user/profile', {
+        name, intro, email
+      })
+      this.$message.success('保存成功')
+      // 改home
+      eventBus.$emit('toggleName', name)
+      // 改本地
+      const user = local.getUser()
+      user.name = name
+      local.setUser(user)
+    },
+    // 修改头像图片
+    async updatePhoto (res) {
+      const { file } = res
+      const formDate = new FormData()
+      formDate.append('photo', file)
+      const { data: { data } } = await this.$http.patch('user/photo', formDate)
+      this.$message.success('图片修改成功')
+      this.userInfo.photo = data.photo
+      // 改home
+      eventBus.$emit('togglePhoto', data.photo)
+      // 改本地
+      const user = local.getUser()
+      user.photo = data.photo
+      local.setUser(user)
     }
   }
 }

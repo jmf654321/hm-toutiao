@@ -74,12 +74,16 @@
 </template>
 
 <script>
+import eventBus from '@/eventBus'
 import local from '@/untils/local'
 export default {
   data () {
     return {
       isopen: true,
-      userInfo: {}
+      userInfo: {
+        name: '',
+        photo: ''
+      }
     }
   },
   methods: {
@@ -98,6 +102,14 @@ export default {
     const user = local.getUser() || {}
     this.userInfo.name = user.name
     this.userInfo.photo = user.photo
+    // 获取修改的name
+    eventBus.$on('toggleName', (data) => {
+      this.userInfo.name = data
+    })
+    // 获取修改的图片信息
+    eventBus.$on('togglePhoto', (data) => {
+      this.userInfo.photo = data
+    })
   }
 }
 </script>
