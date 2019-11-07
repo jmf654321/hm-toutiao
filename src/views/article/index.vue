@@ -165,7 +165,7 @@ export default {
     },
     // 编辑携带id参数
     toEdit (id) {
-      this.$router.push({ path: '/publilsh', query: { id } })
+      this.$router.push({ path: '/publish', query: { id } })
     },
     // 删除
     async del (id) {
